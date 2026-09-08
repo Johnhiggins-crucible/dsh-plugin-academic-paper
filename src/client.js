@@ -59,6 +59,8 @@ window.__ModuleLoader__.load({
       "[" + ATTR + "] .ap-foot button { flex: 1; white-space: nowrap; }",
       "[" + ATTR + "] .ap-export { padding: 0 14px 12px; }",
       "[" + ATTR + "] .ap-export textarea { min-height: 96px; resize: vertical; white-space: pre; font-family: ui-monospace, 'Cascadia Code', Consolas, 'Courier New', monospace; font-size: 12px; line-height: 1.5; }",
+      "[" + ATTR + "] .ap-export-actions { display: flex; gap: 8px; padding-top: 8px; }",
+      "[" + ATTR + "] .ap-export-actions button { flex: 1; white-space: nowrap; }",
       "[" + ATTR + "] .ap-history-item { padding: 7px 2px; border-bottom: 1px dashed var(--ap-border-2); color: var(--ap-text-2); font-size: 12.5px; line-height: 1.5; }",
       "[" + ATTR + "] .ap-history-item:last-child { border-bottom: none; }",
     ].join("\n");
@@ -199,8 +201,11 @@ window.__ModuleLoader__.load({
 
       var exportBox = el("div", { class: "ap-export", style: "display:none;" });
       var exportArea = el("textarea", { readonly: "readonly", placeholder: "导出内容将显示在这里", spellcheck: "false" });
-      var exportCopy = el("button", { class: "ap-primary", style: "margin-top:8px;width:100%;" }, ["复制到剪贴板"]);
-      exportBox.append(exportArea, exportCopy);
+      var exportActions = el("div", { class: "ap-export-actions" });
+      var exportCopy = el("button", { class: "ap-primary" }, ["复制到剪贴板"]);
+      var exportSave = el("button", { class: "ap-ghost" }, ["下载文件"]);
+      exportActions.append(exportCopy, exportSave);
+      exportBox.append(exportArea, exportActions);
       panel.appendChild(exportBox);
 
       var sessions = [];
@@ -349,9 +354,13 @@ window.__ModuleLoader__.load({
           });
       }
 
+      var currentExport = { format: "", content: "" };
+
       function showExport(format) {
         fetchText(EXPORT_PATH + "?session=" + encodeURIComponent(currentSession) + "&format=" + format)
           .then(function (content) {
+            currentExport.format = format;
+            currentExport.content = content;
             exportArea.value = content.length > EXPORT_LIMIT ? content.slice(0, EXPORT_LIMIT) + "\n…（内容过长已截断）" : content;
             exportBox.style.display = "";
             setStatus(format === "markdown" ? "Markdown 已导出" : "BibTeX 已导出");
@@ -370,15 +379,60 @@ window.__ModuleLoader__.load({
       btnExportBib.addEventListener("click", function () { showExport("bibtex"); });
       btnExportMd.addEventListener("click", function () { showExport("markdown"); });
 
-      exportCopy.addEventListener("click", function () {
-        exportArea.select();
-        try {
-          document.execCommand("copy");
+      function copyText(text) {
+        function legacy() {
+          var ta = document.createElement("textarea");
+          ta.value = text;
+          ta.style.position = "fixed";
+          ta.style.opacity = "0";
+          document.body.appendChild(ta);
+          ta.select();
+          try {
+            document.execCommand("copy");
+            document.body.removeChild(ta);
+            return true;
+          } catch (e) {
+            document.body.removeChild(ta);
+            return false;
+          }
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(function () {
+            setStatus("已复制到剪贴板");
+          }, function () {
+            if (legacy()) setStatus("已复制到剪贴板");
+            else setStatus("复制失败，请手动 Ctrl+C");
+          });
+        } else if (legacy()) {
           setStatus("已复制到剪贴板");
-        } catch (error) {
+        } else {
           setStatus("复制失败，请手动 Ctrl+C");
         }
+      }
+
+      exportCopy.addEventListener("click", function () {
+        var text = currentExport.content !== "" ? currentExport.content : exportArea.value;
+        copyText(text);
       });
+
+      function saveExport() {
+        var fmt = currentExport.format;
+        var ext = fmt === "markdown" ? "md" : "bib";
+        var mime = fmt === "markdown" ? "text/markdown;charset=utf-8" : "text/plain;charset=utf-8";
+        var blob = new Blob([currentExport.content], { type: mime });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement("a");
+        var d = new Date();
+        var stamp = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+        a.href = url;
+        a.download = "academic-library-" + stamp + "." + ext;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+        setStatus("已下载 ." + ext + " 文件");
+      }
+      exportSave.addEventListener("click", saveExport);
 
       function refreshAll() {
         applyScheme();
