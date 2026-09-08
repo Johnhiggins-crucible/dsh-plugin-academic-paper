@@ -32,6 +32,20 @@ dsh web
 - 「把这篇文献加入文献库，然后用 GB/T 7714 生成引用」
 - 「导出文献库为 BibTeX 和 Markdown」
 
+## 界面预览
+
+插件加载后，网页右下角出现「📚 文献」胶囊入口，点击展开侧边文献库面板；面板自动判定 GUI 主题并实时跟随切换（浅色 / 深色）。
+
+**浅色主题**
+
+![侧边面板浅色主题](docs/screenshot/1.png)
+
+**深色主题**
+
+![侧边面板深色主题](docs/screenshot/2.png)
+
+> 截图预览的是完整 GUI（DeepSeek Harness Web）中的效果。更多交互说明见 [docs/usage.md](docs/usage.md) §6。
+
 ## 工具清单
 
 | 工具 | 用途 |
@@ -100,7 +114,9 @@ dsh-plugin-academic-paper/
 │   └── client.js           # 浏览器侧边面板（__ModuleLoader__ 挂载）
 ├── docs/
 │   ├── PRD.md              # 产品需求文档
-│   └── api.md              # 接口文档
+│   ├── api.md              # 接口文档
+│   ├── usage.md            # 使用教程
+│   └── screenshot/         # README 界面预览截图（浅/深主题）
 ├── test/run-tests.mjs      # 单元测试 + 集成冒烟
 ├── README.md
 ├── CHANGELOG.md
