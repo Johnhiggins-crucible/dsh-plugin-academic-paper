@@ -6,8 +6,13 @@
 ## 1. 安装与生效
 
 ```bash
-# 本地开发目录安装到 web profile
-dsh plugin --profile web add file:./dsh-plugin-academic-paper
+# 方式 A（推荐）：npm 已发布，一行直装
+dsh plugin --profile web add dsh-plugin-academic-paper
+
+# 方式 B：本地源码安装（开发 / 调试）
+#   git clone https://github.com/zhaoxuejie/dsh-plugin-academic-paper.git
+#   cd dsh-plugin-academic-paper && pnpm install
+#   dsh plugin --profile web add file:./dsh-plugin-academic-paper
 
 # 重启后生效
 dsh web

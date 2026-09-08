@@ -12,16 +12,35 @@ DeepSeek Harness 学术文献插件：**插件负责真实数据源检索与引�
 ## 安装
 
 需要 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（Node.js 22+，Web profile）。
+本插件是 DSH 原生插件，不是独立应用，须装进某个 DSH profile（GUI 一般用 `web`）后由 loader 组合生效。
+
+### 方式 A：npm 安装（推荐，已发布到 npm）
 
 ```bash
-# 本地开发目录安装
-dsh plugin --profile web add file:./dsh-plugin-academic-paper
+dsh plugin --profile web add dsh-plugin-academic-paper
 
 # 重启 web 生效
 dsh web
 ```
 
-插件加载后，网页右下角出现「📚 文献」侧边面板；模型即可使用 `academic_*` 工具。
+### 方式 B：GitHub 源码安装（开发 / 调试）
+
+```bash
+git clone https://github.com/zhaoxuejie/dsh-plugin-academic-paper.git
+cd dsh-plugin-academic-paper
+pnpm install        # prepare 脚本自动 build → 生成 lib/（编译产物不入库）
+
+dsh plugin --profile web add file:./dsh-plugin-academic-paper
+dsh web
+```
+
+> 跟随上游更新：`git pull` 后重跑 `dsh plugin add`；或改用 `add link:./dsh-plugin-academic-paper`
+> 目录符号链接，源码即改即生效。
+
+### 验证与卸载
+
+- 验证：插件加载后网页右下角出现「📚 文献」胶囊入口，点击展开侧边文献库面板；模型即可使用 `academic_*` 工具。
+- 卸载：`dsh plugin --profile web remove dsh-plugin-academic-paper`。
 
 ## 快速开始
 
