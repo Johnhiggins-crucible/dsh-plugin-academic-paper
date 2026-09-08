@@ -53,5 +53,13 @@
       "platform": "web"
     }
   },
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhaoxuejie/dsh-plugin-academic-paper.git"
+  },
+  "homepage": "https://github.com/zhaoxuejie/dsh-plugin-academic-paper#readme",
+  "bugs": {
+    "url": "https://github.com/zhaoxuejie/dsh-plugin-academic-paper/issues"
+  }
 }
