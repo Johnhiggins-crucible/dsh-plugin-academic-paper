@@ -2,6 +2,20 @@
 
 本项目遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/) 语义化版本约定。
 
+## [0.1.1] - 2026-09-08
+
+### 修复
+
+- 工具输出边界去除值为 `undefined` 的字段，符合宿主「无损 JSON」校验（修复 `academic_search` 等的 `value is not lossless JSON` 报错）
+- 渲染回调签名对齐宿主约定 `render(args, value)`，修复检索结果渲染报错
+- 客户端面板样式表未挂载导致的「全白/裸样式」问题
+
+### 变更
+
+- 侧边面板整体重排（统一字体与字阶、留白/对齐/按钮规范化），自动判定浅/深主题并实时跟随切换
+- 导出区新增「下载文件」（`.bib` / `.md`，文件名带日期）；「复制」改用 Clipboard API 复制全文
+- 新增使用教程 `docs/usage.md`，README 补充入口与导出说明
+
 ## [0.1.0] - 2026-09-06
 
 ### 新增（对应 PRD V1.0）
