@@ -1,6 +1,6 @@
 {
   "name": "dsh-plugin-academic-paper",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "DeepSeek Harness 学术文献插件：arXiv / Semantic Scholar 真实数据源检索、单篇详情、GB/T 7714 / APA / BibTeX 引用格式生成、本地文献库与批量导出，杜绝模型编造文献信息",
   "type": "module",
   "main": "./lib/index.js",

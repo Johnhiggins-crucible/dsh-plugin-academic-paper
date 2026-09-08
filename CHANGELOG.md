@@ -2,6 +2,15 @@
 
 本项目遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/) 语义化版本约定。
 
+## [0.1.2] - 2026-09-09
+
+### 变更
+
+- README 安装章节补充 **npm 直装方式**（方式 A，推荐）与 GitHub 源码安装（方式 B），并附验证/卸载说明
+- `package.json` 补充 npm 发布元数据（`repository` / `homepage` / `bugs`）
+- 使用教程 `docs/usage.md` 安装章节同步 npm 直装命令
+- README 新增界面预览截图（`docs/screenshot/` 浅/深主题）
+
 ## [0.1.1] - 2026-09-08
 
 ### 修复
