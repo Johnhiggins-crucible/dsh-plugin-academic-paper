@@ -175,7 +175,7 @@ function renderPaperLine(paper: Paper): string {
   return `[${paper.id}] ${paper.title} — ${authors} ${meta ? `— ${meta}` : ''}`
 }
 
-function renderSearchResult(value: unknown): Array<{ type: 'text'; text: string }> {
+function renderSearchResult(_args: unknown, value: unknown): Array<{ type: 'text'; text: string }> {
   const v = value as { papers: Paper[]; query: string; source: string; total: number; errors?: string[] }
   const lines: string[] = []
   if (v.errors && v.errors.length > 0) {
@@ -195,7 +195,7 @@ function renderSearchResult(value: unknown): Array<{ type: 'text'; text: string 
   return [{ type: 'text', text: lines.join('\n') }]
 }
 
-function renderPaperDetail(value: unknown): Array<{ type: 'text'; text: string }> {
+function renderPaperDetail(_args: unknown, value: unknown): Array<{ type: 'text'; text: string }> {
   const paper = value as Paper
   const lines = [
     `标题：${paper.title}`,
@@ -215,12 +215,12 @@ function renderPaperDetail(value: unknown): Array<{ type: 'text'; text: string }
   return [{ type: 'text', text: lines.join('\n') }]
 }
 
-function renderCite(value: unknown): Array<{ type: 'text'; text: string }> {
+function renderCite(_args: unknown, value: unknown): Array<{ type: 'text'; text: string }> {
   const v = value as { citation: string; format: string }
   return [{ type: 'text', text: `已生成引用（格式：${v.format}）：\n${v.citation}` }]
 }
 
-function renderLibraryList(value: unknown): Array<{ type: 'text'; text: string }> {
+function renderLibraryList(_args: unknown, value: unknown): Array<{ type: 'text'; text: string }> {
   const v = value as { papers: Paper[]; session: string }
   if (v.papers.length === 0) {
     return [{ type: 'text', text: '当前文献库为空。可先用 academic_search 检索，再用 academic_library_add 加入文献。' }]
@@ -232,7 +232,7 @@ function renderLibraryList(value: unknown): Array<{ type: 'text'; text: string }
   return [{ type: 'text', text: lines.join('\n') }]
 }
 
-function renderExport(value: unknown): Array<{ type: 'text'; text: string }> {
+function renderExport(_args: unknown, value: unknown): Array<{ type: 'text'; text: string }> {
   const v = value as { content: string; format: string; count: number }
   if (v.count === 0) {
     return [{ type: 'text', text: '文献库为空，没有可导出的参考文献。' }]
