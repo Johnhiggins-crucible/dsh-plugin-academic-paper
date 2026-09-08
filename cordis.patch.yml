@@ -1,0 +1,6 @@
+# dsh-plugin-academic-paper bundle patch：向 web 组合挂载本插件
+# 说明：本文件即 PRD「交付物清单」中的 cordis.yml —— DeepSeek Harness 组合包以
+#       cordis.patch.yml 作为配置层（insert 行），插件 Config schema 的默认值即配置默认值。
+- insert:
+    - id: dsh-plugin-academic-paper
+      name: dsh-plugin-academic-paper

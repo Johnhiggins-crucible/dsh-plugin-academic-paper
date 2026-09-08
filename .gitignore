@@ -1,0 +1,25 @@
+# 依赖与构建产物
+node_modules/
+lib/
+dist/
+.npm-cache/
+.pnpm-store/
+
+# 日志与临时文件
+*.log
+*.tmp
+*.tsbuildinfo
+
+# 本地预览 / 调试生成物（不入库）
+preview-ui.html
+
+# 环境与密钥
+.env
+.env.*
+!.env.example
+
+# 系统与编辑器杂项
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
